@@ -211,12 +211,27 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 			return 0D;
 		}
 	}
+	
+	public static Double toDouble(Object val,Double defauleVal){
+		if (val == null){
+			return defauleVal;
+		}
+		try {
+			return Double.valueOf(trim(val.toString()));
+		} catch (Exception e) {
+			return defauleVal;
+		}
+	}
 
 	/**
 	 * 转换为Float类型
 	 */
 	public static Float toFloat(Object val){
 		return toDouble(val).floatValue();
+	}
+	
+	public static Float toFloat(Object val, Float defauleVal){
+		return toDouble(val,defauleVal.doubleValue()).floatValue();
 	}
 
 	/**
@@ -225,12 +240,20 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	public static Long toLong(Object val){
 		return toDouble(val).longValue();
 	}
+	
+	public static Long toLong(Object val, Long defaultVal){
+		return toDouble(val,defaultVal.doubleValue()).longValue();
+	}
 
 	/**
 	 * 转换为Integer类型
 	 */
 	public static Integer toInteger(Object val){
 		return toLong(val).intValue();
+	}
+	
+	public static Integer toInteger(Object val, Integer defaultVal){
+		return toLong(val,defaultVal.longValue()).intValue();
 	}
 	
 	
@@ -306,7 +329,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     public static String toUnderScoreCase(String s) {
         if (s == null) {
             return null;
-        			}
+       }
 
         StringBuilder sb = new StringBuilder();
         boolean upperCase = false;
@@ -317,19 +340,19 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
             if (i < (s.length() - 1)) {
                 nextUpperCase = Character.isUpperCase(s.charAt(i + 1));
-            				}
+            }
 
             if ((i > 0) && Character.isUpperCase(c)) {
                 if (!upperCase || !nextUpperCase) {
                     sb.append(SEPARATOR);
-                						}
-                upperCase = true;
+            }
+            upperCase = true;
             } else {
                 upperCase = false;
-            				}
+            }
 
             sb.append(Character.toLowerCase(c));
-        			}
+        	}
 
         return sb.toString();
     	}
