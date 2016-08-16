@@ -3,13 +3,20 @@ package cn.zern.commons.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.log4j.Logger;
+
+import com.sun.mail.imap.protocol.BODY;
 
 /**
  * FTP工具类
@@ -127,7 +134,8 @@ public class FTPUtils {
 			client.changeWorkingDirectory(remotePath);
 			success = client.storeFile(newFileName, is);
 			is.close();
-			client.disconnect();
+			log.info("upload file "+newFileName+" success");
+			close();
 		} catch (FileNotFoundException e) {
 			log.info("Srcfile not found");
 			e.printStackTrace();
@@ -138,7 +146,108 @@ public class FTPUtils {
 		
 		return success;
 	}
+	
+	/**
+	 * 批量上传文件
+	 * @param files	源文件
+	 * @param fileNames	上传后文件名
+	 * @param remotePath 服务器路径
+	 * @return
+	 */
+	public Boolean uploadFiles(List<File> files, List<String> fileNames,
+			String remotePath){
+		if (fileNames.size() != files.size()) {
+			throw new IndexOutOfBoundsException("files size must be equal to fileNames size");
+		}
+		buildClient();
+		Boolean success = false;
+		try {
+			client.changeWorkingDirectory(remotePath);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		for(int i = 0; i < files.size(); i++){
+			try {
+				InputStream is;
+				is = new FileInputStream(files.get(i));
+				success = client.storeFile(fileNames.get(i), is);
+				is.close();
+				log.info("upload file "+fileNames.get(i)+" success");
+			} catch (FileNotFoundException e) {
+				log.info("Srcfile not found");
+				e.printStackTrace();
+			} catch (IOException e) {
+				log.info("上传失败");
+				e.printStackTrace();
+			}
+		}
+		close();
+		return success;
+	}
+	
+	/**
+	 * 批量上传文件，文件名不变
+	 * @param files	源文件
+	 * @param remotePath 服务器路径
+	 * @return
+	 */
+	public Boolean uploadFiles(List<File>files, String remotePath){
+		List<String> fileNames = new ArrayList<String>();
+		for (File file : files) {
+			fileNames.add(file.getName());
+		}
+		return uploadFiles(files, fileNames, remotePath);
+	}
+	
+	/**
+	 * 下载文件
+	 * @param fileName	服务器文件名
+	 * @param remotePath 服务器路径
+	 * @param LocalFile	下载至本地文件
+	 * @return
+	 */
+	public Boolean downloadFile(String fileName,String remotePath,File LocalFile){
+		buildClient();
+		Boolean success = false;
+		try {
+			client.changeWorkingDirectory(remotePath);
+			FTPFile [] files = client.listFiles();
+			for (FTPFile ftpFile : files) {
+				if (ftpFile.getName().equals(fileName)) {
+					OutputStream os = new FileOutputStream(LocalFile);
+					client.retrieveFile(fileName, os);
+					os.flush();
+					os.close();
+					success = true;
+				}
+			}
+			if (success) {
+				log.info("download file success");
+			}else {
+				log.info("could not find file");
+			}
+		} catch (IOException e) {
+			log.info("下载失败");
+			e.printStackTrace();
+		}
+		return success;
+	}
 
+	/**
+	 * 关闭ftp连接
+	 */
+	public void close(){
+		if (client != null && client.isConnected()) {
+			try {
+				client.logout();
+				client.disconnect();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public FTPClient getClient() {
 		buildClient();
 		return client;

@@ -14,13 +14,28 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 文件操作工具类
  * 实现文件的创建、删除、复制、压缩、解压以及目录的创建、删除、复制、压缩解压等功能
- * @author ThinkGem
- * @version 2013-06-21
+ * @author zern
+ *
+ * 2016年8月16日下午4:24:24
  */
 public class FileUtils extends org.apache.commons.io.FileUtils {
 	
 	private static Logger log = Logger.getLogger(FileUtils.class);
-
+	
+	public static String getFileType(File file){
+		String name = file.getName();
+		return getFileType(name);
+	}
+	
+	public static String getFileType(String fileName){
+		if (fileName.indexOf(".") > 0) {
+			return fileName.substring(fileName.lastIndexOf(".")+1);
+		}else {
+			return "";
+		}
+	}
+	
+	
 	/**
 	 * 复制单个文件，如果目标文件存在，则不覆盖
 	 * @param srcFileName 待复制的文件名
