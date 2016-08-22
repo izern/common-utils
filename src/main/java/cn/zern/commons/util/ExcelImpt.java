@@ -41,6 +41,11 @@ public class ExcelImpt {
 	private int headerNum;
 	
 	/**
+	 * 文件名称
+	 */
+	private String fileName;
+	
+	/**
 	 * 构造函数
 	 * @param path 导入文件，读取第一个工作表
 	 * @param headerNum 标题行号，数据行号=标题行号+1
@@ -88,6 +93,7 @@ public class ExcelImpt {
 	public ExcelImpt(File file, int headerNum, int sheetIndex) 
 			throws InvalidFormatException, IOException {
 		this(file.getName(), new FileInputStream(file), headerNum, sheetIndex);
+		this.fileName = file.getAbsolutePath();
 	}
 	
 	/**
@@ -131,6 +137,30 @@ public class ExcelImpt {
 	}
 	
 	/**
+	 * 获取文件名
+	 * @return
+	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * 获取原生WorkBook
+	 * @return
+	 */
+	public Workbook getWb() {
+		return wb;
+	}
+
+	/**
+	 * 获取原生Sheet
+	 * @return
+	 */
+	public Sheet getSheet() {
+		return sheet;
+	}
+
+	/**
 	 * 获取行对象
 	 * @param rownum
 	 * @return
@@ -152,7 +182,7 @@ public class ExcelImpt {
 	 * @return
 	 */
 	public int getLastDataRowNum(){
-		return this.sheet.getLastRowNum()+headerNum;
+		return this.sheet.getLastRowNum()+getDataRowNum();
 	}
 	
 	/**
@@ -200,6 +230,23 @@ public class ExcelImpt {
 		return val;
 	}
 	
+	/**
+	 * 获取指定列号
+	 * @param col
+	 * @return	该属性的列号，当不存在时，返回-1
+	 */
+	public int getCellnumByString(String col){
+		Row head = getRow(headerNum);
+		int cellnum = -1;
+		for (int i = 0; i < head.getLastCellNum(); i++) {
+			String val = getCellValue(head, i).toString();
+			if (col.equalsIgnoreCase(val)) {
+				cellnum = i;
+				break ;
+			}
+		}
+		return cellnum;
+	}
 
 	/**
 	 * 导入测试

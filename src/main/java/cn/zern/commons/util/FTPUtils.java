@@ -172,6 +172,9 @@ public class FTPUtils {
 				is = new FileInputStream(files.get(i));
 				success = client.storeFile(fileNames.get(i), is);
 				is.close();
+				if (!success) {
+					break;
+				}
 				log.info("upload file "+fileNames.get(i)+" success");
 			} catch (FileNotFoundException e) {
 				log.info("Srcfile not found");
