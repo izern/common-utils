@@ -131,7 +131,7 @@ public class FTPUtils {
 		Boolean success = false;
 		try {
 			is = new FileInputStream(srcFile);
-			client.changeWorkingDirectory(remotePath);
+			changeDiretory(remotePath);
 			success = client.storeFile(newFileName, is);
 			is.close();
 			log.info("upload file "+newFileName+" success");
@@ -162,7 +162,7 @@ public class FTPUtils {
 		buildClient();
 		Boolean success = false;
 		try {
-			client.changeWorkingDirectory(remotePath);
+			changeDiretory(remotePath);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -213,7 +213,7 @@ public class FTPUtils {
 		buildClient();
 		Boolean success = false;
 		try {
-			client.changeWorkingDirectory(remotePath);
+			changeDiretory(remotePath);
 			FTPFile [] files = client.listFiles();
 			for (FTPFile ftpFile : files) {
 				if (ftpFile.getName().equals(fileName)) {
@@ -250,14 +250,29 @@ public class FTPUtils {
 			}
 		}
 	}
+	/**
+	 * 改变当前路径，多级目录使用/分隔,如果目录不存在则新建目录
+	 * @param path
+	 * @throws IOException 
+	 */
+	public void changeDiretory(String path) throws IOException{
+		buildClient();
+		client.changeWorkingDirectory("/");
+		String[] paths = path.split("/");
+		for (String string : paths) {
+			if (StringUtils.isBlank(string)) {
+				continue;
+			}
+			if (!client.changeWorkingDirectory(string)) {
+				client.makeDirectory(string);
+				client.changeWorkingDirectory(string);
+			}
+		}
+	}
 	
 	public FTPClient getClient() {
 		buildClient();
 		return client;
 	}
-	
-	
-	
-	
 
 }

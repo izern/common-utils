@@ -34,7 +34,7 @@ public class PropertiesUtils {
 	}
 
 	/**
-	 * 取出Property，但以System的Property优先,取不到返回空字符串.
+	 * 取出Property，但以System的Property优先,取不到返回null.
 	 */
 	private String getValue(String key) {
 		String systemProperty = System.getProperty(key);
@@ -44,7 +44,7 @@ public class PropertiesUtils {
 		if (properties.containsKey(key)) {
 	        return properties.getProperty(key);
 	    }
-	    return "";
+	    return null;
 	}
 
 	/**
