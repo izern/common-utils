@@ -16,8 +16,6 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.log4j.Logger;
 
-import com.sun.mail.imap.protocol.BODY;
-
 /**
  * FTP工具类
  * <p>获取client</p>
