@@ -1,8 +1,9 @@
-package cn.zern.commons.util;
+package cn.izern.commons.util;
 
 import java.io.IOException;  
 import java.net.URL;  
-import java.util.ArrayList;  
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;  
 import java.util.Map;  
   
@@ -33,9 +34,9 @@ import org.apache.http.util.EntityUtils;
 public class HttpClientUtils {
 	
     private static RequestConfig requestConfig = RequestConfig.custom()  
-            .setSocketTimeout(15000)  
-            .setConnectTimeout(15000)  
-            .setConnectionRequestTimeout(15000)  
+            .setSocketTimeout(30000)  
+            .setConnectTimeout(30000)  
+            .setConnectionRequestTimeout(30000)  
             .build();  
       
     /** 
@@ -57,7 +58,7 @@ public class HttpClientUtils {
         try {  
             //设置参数  
             StringEntity stringEntity = new StringEntity(params, "UTF-8");  
-            stringEntity.setContentType("application/x-www-form-urlencoded");  
+//            stringEntity.setContentType("application/x-www-form-urlencoded");  
             httpPost.setEntity(stringEntity);  
         } catch (Exception e) {  
             e.printStackTrace();  
@@ -241,5 +242,4 @@ public class HttpClientUtils {
         }  
         return responseContent;  
     }
-    
 }

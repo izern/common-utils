@@ -1,4 +1,4 @@
-package cn.zern.commons.util;
+package cn.izern.commons.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -9,7 +9,8 @@ import java.lang.reflect.Type;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 /**
@@ -27,7 +28,7 @@ public class Reflections {
 
 	private static final String CGLIB_CLASS_SEPARATOR = "$$";
 	
-	private static Logger logger = Logger.getLogger(Reflections.class);
+	private static Logger logger = LoggerFactory.getLogger(Reflections.class);
 
 	/**
 	 * 调用Getter方法.

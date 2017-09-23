@@ -1,20 +1,15 @@
-/**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- */
-package cn.zern.commons.util;
+package cn.izern.commons.util;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.mail.HtmlEmail;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
+//import freemarker.template.Configuration;
+//import freemarker.template.Template;
 
 /**
  * 发送电子邮件
@@ -98,37 +93,37 @@ public class SendMailUtil {
 	 * @param map
 	 *            模板map
 	 */
-	public static void sendFtlMail(String toMailAddr, String subject,
-			String templatePath, Map<String, Object> map) {
-		Template template = null;
-		Configuration freeMarkerConfig = null;
-		HtmlEmail hemail = new HtmlEmail();
-		try {
-			hemail.setHostName(getHost(from));
-			hemail.setSmtpPort(getSmtpPort(from));
-			hemail.setCharset(charSet);
-			hemail.addTo(toMailAddr);
-			hemail.setFrom(from, fromName);
-			hemail.setAuthentication(username, password);
-			hemail.setSubject(subject);
-			freeMarkerConfig = new Configuration();
-			freeMarkerConfig.setDirectoryForTemplateLoading(new File(
-					getFilePath()));
-			// 获取模板
-			template = freeMarkerConfig.getTemplate(getFileName(templatePath),
-					new Locale("Zh_cn"), "UTF-8");
-			// 模板内容转换为string
-			String htmlText = FreeMarkerTemplateUtils
-					.processTemplateIntoString(template, map);
-			System.out.println(htmlText);
-			hemail.setMsg(htmlText);
-			hemail.send();
-			System.out.println("email send true!");
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("email send error!");
-		}
-	}
+//	public static void sendFtlMail(String toMailAddr, String subject,
+//			String templatePath, Map<String, Object> map) {
+//		Template template = null;
+//		Configuration freeMarkerConfig = null;
+//		HtmlEmail hemail = new HtmlEmail();
+//		try {
+//			hemail.setHostName(getHost(from));
+//			hemail.setSmtpPort(getSmtpPort(from));
+//			hemail.setCharset(charSet);
+//			hemail.addTo(toMailAddr);
+//			hemail.setFrom(from, fromName);
+//			hemail.setAuthentication(username, password);
+//			hemail.setSubject(subject);
+//			freeMarkerConfig = new Configuration();
+//			freeMarkerConfig.setDirectoryForTemplateLoading(new File(
+//					getFilePath()));
+//			// 获取模板
+//			template = freeMarkerConfig.getTemplate(getFileName(templatePath),
+//					new Locale("Zh_cn"), "UTF-8");
+//			// 模板内容转换为string
+//			String htmlText = FreeMarkerTemplateUtils
+//					.processTemplateIntoString(template, map);
+//			System.out.println(htmlText);
+//			hemail.setMsg(htmlText);
+//			hemail.send();
+//			System.out.println("email send true!");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println("email send error!");
+//		}
+//	}
 
 	/**
 	 * 发送普通邮件
@@ -161,27 +156,27 @@ public class SendMailUtil {
 
 	}
 
-	public static String getHtmlText(String templatePath,
-			Map<String, Object> map) {
-		Template template = null;
-		String htmlText = "";
-		try {
-			Configuration freeMarkerConfig = null;
-			freeMarkerConfig = new Configuration();
-			freeMarkerConfig.setDirectoryForTemplateLoading(new File(
-					getFilePath()));
-			// 获取模板
-			template = freeMarkerConfig.getTemplate(getFileName(templatePath),
-					new Locale("Zh_cn"), "UTF-8");
-			// 模板内容转换为string
-			htmlText = FreeMarkerTemplateUtils.processTemplateIntoString(
-					template, map);
-			System.out.println(htmlText);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return htmlText;
-	}
+//	public static String getHtmlText(String templatePath,
+//			Map<String, Object> map) {
+//		Template template = null;
+//		String htmlText = "";
+//		try {
+//			Configuration freeMarkerConfig = null;
+//			freeMarkerConfig = new Configuration();
+//			freeMarkerConfig.setDirectoryForTemplateLoading(new File(
+//					getFilePath()));
+//			// 获取模板
+//			template = freeMarkerConfig.getTemplate(getFileName(templatePath),
+//					new Locale("Zh_cn"), "UTF-8");
+//			// 模板内容转换为string
+//			htmlText = FreeMarkerTemplateUtils.processTemplateIntoString(
+//					template, map);
+//			System.out.println(htmlText);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return htmlText;
+//	}
 
 	private static String getFilePath() {
 		String path = getAppPath(SendMailUtil.class);
@@ -257,38 +252,6 @@ public class SendMailUtil {
 		}
 		System.out.println("realPath----->" + realPath);
 		return realPath;
-	}
-
-	// private static File getFile(String path){
-	// File file =
-	// SendMail.class.getClassLoader().getResource("mailtemplate/test.ftl").getFile();
-	// return file;
-	// }
-	//
-
-	public static void main(String[] args) {
-		// HtmlEmail hemail = new HtmlEmail();
-		// try {
-		// hemail.setHostName("smtp.exmail.qq.com");
-		// hemail.setCharset("utf-8");
-		// hemail.addTo("fly.1206@qq.com");
-		// hemail.setFrom("zhoujunfeng@et-bank.com", "周俊峰");
-		// hemail.setAuthentication("zhoujunfeng@et-bank.com", "31415926@aa");
-		// hemail.setSubject("sendemail test!");
-		// hemail.setMsg("<a href=\"http://www.google.cn\">谷歌</a><br/>");
-		// hemail.send();
-		// System.out.println("email send true!");
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// System.out.println("email send error!");
-		// }
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("subject", "测试标题");
-		map.put("content", "测试 内容");
-		String templatePath = "mailtemplate/test.ftl";
-		sendFtlMail("test@163.com", "sendemail test!", templatePath, map);
-
-		// System.out.println(getFileName("mailtemplate/test.ftl"));
 	}
 
 }

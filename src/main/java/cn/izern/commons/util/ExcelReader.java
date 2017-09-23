@@ -1,4 +1,4 @@
-package cn.zern.commons.util;
+package cn.izern.commons.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,14 +6,17 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -21,9 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ThinkGem
  * @version 2013-03-10
  */
-public class ExcelImpt {
+public class ExcelReader {
 	
-	private static Logger log = Logger.getLogger(ExcelImpt.class);
+	private static Logger log = LoggerFactory.getLogger(ExcelReader.class);
 			
 	/**
 	 * 工作薄对象
@@ -46,13 +49,18 @@ public class ExcelImpt {
 	private String fileName;
 	
 	/**
+	 * 公式计算
+	 */
+	private FormulaEvaluator evaluator;
+	
+	/**
 	 * 构造函数
 	 * @param path 导入文件，读取第一个工作表
 	 * @param headerNum 标题行号，数据行号=标题行号+1
 	 * @throws InvalidFormatException 
 	 * @throws IOException 
 	 */
-	public ExcelImpt(String fileName, int headerNum) 
+	public ExcelReader(String fileName, int headerNum) 
 			throws InvalidFormatException, IOException {
 		this(new File(fileName), headerNum);
 	}
@@ -64,7 +72,7 @@ public class ExcelImpt {
 	 * @throws InvalidFormatException 
 	 * @throws IOException 
 	 */
-	public ExcelImpt(File file, int headerNum) 
+	public ExcelReader(File file, int headerNum) 
 			throws InvalidFormatException, IOException {
 		this(file, headerNum, 0);
 	}
@@ -77,7 +85,7 @@ public class ExcelImpt {
 	 * @throws InvalidFormatException 
 	 * @throws IOException 
 	 */
-	public ExcelImpt(String fileName, int headerNum, int sheetIndex) 
+	public ExcelReader(String fileName, int headerNum, int sheetIndex) 
 			throws InvalidFormatException, IOException {
 		this(new File(fileName), headerNum, sheetIndex);
 	}
@@ -90,7 +98,7 @@ public class ExcelImpt {
 	 * @throws InvalidFormatException 
 	 * @throws IOException 
 	 */
-	public ExcelImpt(File file, int headerNum, int sheetIndex) 
+	public ExcelReader(File file, int headerNum, int sheetIndex) 
 			throws InvalidFormatException, IOException {
 		this(file.getName(), new FileInputStream(file), headerNum, sheetIndex);
 		this.fileName = file.getAbsolutePath();
@@ -104,7 +112,7 @@ public class ExcelImpt {
 	 * @throws InvalidFormatException 
 	 * @throws IOException 
 	 */
-	public ExcelImpt(MultipartFile multipartFile, int headerNum, int sheetIndex) 
+	public ExcelReader(MultipartFile multipartFile, int headerNum, int sheetIndex) 
 			throws InvalidFormatException, IOException {
 		this(multipartFile.getOriginalFilename(), multipartFile.getInputStream(), headerNum, sheetIndex);
 	}
@@ -117,7 +125,7 @@ public class ExcelImpt {
 	 * @throws InvalidFormatException 
 	 * @throws IOException 
 	 */
-	public ExcelImpt(String fileName, InputStream is, int headerNum, int sheetIndex) 
+	public ExcelReader(String fileName, InputStream is, int headerNum, int sheetIndex) 
 			throws InvalidFormatException, IOException {
 		if (StringUtils.isBlank(fileName)){
 			throw new RuntimeException("导入文档为空!");
@@ -133,6 +141,7 @@ public class ExcelImpt {
 		}
 		this.sheet = this.wb.getSheetAt(sheetIndex);
 		this.headerNum = headerNum;
+		this.evaluator = wb.getCreationHelper().createFormulaEvaluator();
 		log.debug("Initialize success.");
 	}
 	
@@ -217,7 +226,28 @@ public class ExcelImpt {
 				}else if (cell.getCellType() == Cell.CELL_TYPE_STRING){
 					val = cell.getStringCellValue();
 				}else if (cell.getCellType() == Cell.CELL_TYPE_FORMULA){
-					val = cell.getCellFormula();
+					CellValue cellValue = evaluator.evaluate(cell);
+					switch (cellValue.getCellType()) {
+					case Cell.CELL_TYPE_STRING:
+						val = cellValue.getStringValue();
+						break;
+					case Cell.CELL_TYPE_NUMERIC:	
+						val = cellValue.getNumberValue();
+						break;
+					case Cell.CELL_TYPE_BOOLEAN:
+						val = cellValue.getBooleanValue();
+						break;
+					case Cell.CELL_TYPE_ERROR:
+						val = cellValue.getErrorValue();
+						log.warn("read excel error {}", val.toString());
+						break;
+					case Cell.CELL_TYPE_FORMULA:
+						val = null;
+						break;
+					default:
+						val = null;
+						break;
+					}
 				}else if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN){
 					val = cell.getBooleanCellValue();
 				}else if (cell.getCellType() == Cell.CELL_TYPE_ERROR){
@@ -246,24 +276,6 @@ public class ExcelImpt {
 			}
 		}
 		return cellnum;
-	}
-
-	/**
-	 * 导入测试
-	 */
-	public static void main(String[] args) throws Throwable {
-		
-		ExcelImpt ei = new ExcelImpt("target/export.xlsx", 1);
-		
-		for (int i = ei.getDataRowNum(); i < ei.getLastDataRowNum(); i++) {
-			Row row = ei.getRow(i);
-			for (int j = 0; j < ei.getLastCellNum(); j++) {
-				Object val = ei.getCellValue(row, j);
-				System.out.print(val+", ");
-			}
-			System.out.print("\n");
-		}
-		
 	}
 
 }

@@ -1,4 +1,4 @@
-package cn.zern.commons.util;
+package cn.izern.commons.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +14,8 @@ import java.util.List;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FTP工具类
@@ -36,7 +37,7 @@ public class FTPUtils {
 	private String _enconding;
 	private FTPClient client;
 	
-	private Logger log = Logger.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	
 	public FTPUtils(String _username, String _password, String _url) {

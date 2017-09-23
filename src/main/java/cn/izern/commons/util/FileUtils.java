@@ -1,11 +1,12 @@
-package cn.zern.commons.util;
+package cn.izern.commons.util;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class FileUtils extends org.apache.commons.io.FileUtils {
 	
-	private static Logger log = Logger.getLogger(FileUtils.class);
+	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
 	
 	public static String getFileType(File file){
 		String name = file.getName();

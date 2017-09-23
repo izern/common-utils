@@ -1,4 +1,4 @@
-package cn.zern.commons.util;
+package cn.izern.commons.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

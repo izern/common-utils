@@ -1,4 +1,4 @@
-package cn.zern.commons.util;
+package cn.izern.commons.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
