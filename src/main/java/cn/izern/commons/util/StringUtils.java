@@ -12,10 +12,10 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 
 /**
-  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
- * @author ThinkGem
- * @version 2013-05-22
-  */
+ * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
+ * @author zern
+ * 2016年9月24日 下午12:50:22
+ */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	
     private static final char SEPARATOR = '_';

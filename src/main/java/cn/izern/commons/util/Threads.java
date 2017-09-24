@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 线程相关工具类.
- * @author calvin
- * @version 2013-01-15
+ * @author zern
+ * 2016年9月24日 下午12:51:24
  */
 public class Threads {
 
@@ -40,6 +40,10 @@ public class Threads {
 	 * 如果超时, 则调用shutdownNow, 取消在workQueue中Pending的任务,并中断所有阻塞函数.
 	 * 如果仍人超時，則強制退出.
 	 * 另对在shutdown时线程本身被调用中断做了处理.
+	 * @param pool
+	 * @param shutdownTimeout
+	 * @param shutdownNowTimeout
+	 * @param timeUnit
 	 */
 	public static void gracefulShutdown(ExecutorService pool, int shutdownTimeout, int shutdownNowTimeout,
 			TimeUnit timeUnit) {
@@ -63,6 +67,9 @@ public class Threads {
 
 	/**
 	 * 直接调用shutdownNow的方法, 有timeout控制.取消在workQueue中Pending的任务,并中断所有阻塞函数.
+	 * @param pool
+	 * @param timeout
+	 * @param timeUnit
 	 */
 	public static void normalShutdown(ExecutorService pool, int timeout, TimeUnit timeUnit) {
 		try {

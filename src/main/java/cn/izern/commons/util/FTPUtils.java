@@ -39,16 +39,36 @@ public class FTPUtils {
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
-	
+	/**
+	 * 构造函数,获取连接
+	 * @param _username
+	 * @param _password
+	 * @param _url
+	 */
 	public FTPUtils(String _username, String _password, String _url) {
 		this(_username, _password, _url, 21);
 	}
 
+	/**
+	 * 构造函数,获取连接
+	 * @param _username
+	 * @param _password
+	 * @param _url
+	 * @param _port
+	 */
 	public FTPUtils(String _username, String _password, String _url,
 			Integer _port) {
 		this(_username, _password, _url,_port,"UTF-8");
 	}
 
+	/**
+	 * 构造函数,获取连接
+	 * @param _username
+	 * @param _password
+	 * @param _url
+	 * @param _port
+	 * @param _enconding
+	 */
 	public FTPUtils(String _username, String _password, String _url,
 			Integer _port, String _enconding) {
 		super();
@@ -63,6 +83,7 @@ public class FTPUtils {
 	 * 配置文件地址
 	 * @param configPath
 	 */
+	@Deprecated
 	public FTPUtils(String configPath){
 		PropertiesUtils pro = new PropertiesUtils(configPath);
 		String username = pro.getProperty("ftp.user");

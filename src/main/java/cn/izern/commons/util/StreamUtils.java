@@ -11,22 +11,17 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 /**
- * 
- * @author Andy.Chen
- * @mail Chenjunjun.ZJ@gmail.com
- * 
+ * 字节流工具类
+ * @author zern
+ * 2016年9月24日 下午12:58:10
  */
 public class StreamUtils {
 
 	final static int BUFFER_SIZE = 4096;
 	/**
 	 * 将InputStream转换成String
-	 * 
 	 * @param in
-	 *            InputStream
-	 * @return String
-	 * @throws Exception
-	 * 
+	 * @return
 	 */
 	public static String InputStreamTOString(InputStream in) {
 
@@ -52,11 +47,9 @@ public class StreamUtils {
 
 	/**
 	 * 将InputStream转换成某种字符编码的String
-	 * 
 	 * @param in
 	 * @param encoding
 	 * @return
-	 * @throws Exception
 	 */
 	public static String InputStreamTOString(InputStream in, String encoding) {
 		String string = null;
@@ -81,7 +74,6 @@ public class StreamUtils {
 
 	/**
 	 * 将String转换成InputStream
-	 * 
 	 * @param in
 	 * @return
 	 * @throws Exception
@@ -94,10 +86,8 @@ public class StreamUtils {
 
 	/**
 	 * 将String转换成InputStream
-	 * 
 	 * @param in
 	 * @return
-	 * @throws Exception
 	 */
 	public static byte[] StringTObyte(String in) {
 		byte[] bytes = null;
@@ -112,10 +102,8 @@ public class StreamUtils {
 
 	/**
 	 * 将InputStream转换成byte数组
-	 * 
 	 * @param in
-	 *            InputStream
-	 * @return byte[]
+	 * @return
 	 * @throws IOException
 	 */
 	public static byte[] InputStreamTOByte(InputStream in) throws IOException {
@@ -132,7 +120,6 @@ public class StreamUtils {
 
 	/**
 	 * 将byte数组转换成InputStream
-	 * 
 	 * @param in
 	 * @return
 	 * @throws Exception
@@ -145,10 +132,8 @@ public class StreamUtils {
 
 	/**
 	 * 将byte数组转换成String
-	 * 
 	 * @param in
 	 * @return
-	 * @throws Exception
 	 */
 	public static String byteTOString(byte[] in) {
 
@@ -162,10 +147,8 @@ public class StreamUtils {
 	}
 	/**
 	 * 将byte数组转换成String
-	 * 
 	 * @param in
 	 * @return
-	 * @throws Exception
 	 */
 	public static String getString(String in) {
 
@@ -178,7 +161,12 @@ public class StreamUtils {
 		return is;
 	}
 
-	// InputStream 转换成byte[]
+	/**
+	 * InputStream 转换成byte[]
+	 * @param is
+	 * @return
+	 * @throws IOException
+	 */
 	public byte[] getBytes(InputStream is) throws IOException {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -198,9 +186,9 @@ public class StreamUtils {
 		return bytes;
 	}
 	/**
-	 * 根据文件路径创建文件输入流处理
+	 *  根据文件路径创建文件输入流处理
 	 * 以字节为单位（非 unicode ）
-	 * @param path
+	 * @param filepath
 	 * @return
 	 */
 	public static FileInputStream getFileInputStream(String filepath) {
@@ -213,10 +201,11 @@ public class StreamUtils {
 		}
 		return fileInputStream;
 	}
+	
 	/**
 	 * 根据文件对象创建文件输入流处理
 	 * 以字节为单位（非 unicode ）
-	 * @param path
+	 * @param file
 	 * @return
 	 */
 	public static FileInputStream getFileInputStream(File file) {
@@ -249,8 +238,8 @@ public class StreamUtils {
 	/**
 	 * 根据文件路径创建文件输出流处理
 	 * 以字节为单位（非 unicode ）
-	 * @param path
-	 * @param append true:文件以追加方式打开,false:则覆盖原文件的内容
+	 * @param filepath
+	 * @param append
 	 * @return
 	 */
 	public static FileOutputStream getFileOutputStream(String filepath,boolean append) {
@@ -264,9 +253,19 @@ public class StreamUtils {
 		return fileOutputStream;
 	}
 
+	/**
+	 * 
+	 * @param filepath
+	 * @return
+	 */
 	public static File getFile(String filepath) {
 		return new File(filepath);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public static ByteArrayOutputStream getByteArrayOutputStream() {
 		return new ByteArrayOutputStream();
 	}

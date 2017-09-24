@@ -14,6 +14,8 @@ public class Exceptions {
 
 	/**
 	 * 将CheckedException转换为UncheckedException.
+	 * @param e
+	 * @return
 	 */
 	public static RuntimeException unchecked(Exception e) {
 		if (e instanceof RuntimeException) {
@@ -25,6 +27,8 @@ public class Exceptions {
 
 	/**
 	 * 将ErrorStack转化为String.
+	 * @param e
+	 * @return
 	 */
 	public static String getStackTraceAsString(Throwable e) {
 		if (e == null){
@@ -37,6 +41,9 @@ public class Exceptions {
 
 	/**
 	 * 判断异常是否由某些底层的异常引起.
+	 * @param ex
+	 * @param causeExceptionClasses
+	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public static boolean isCausedBy(Exception ex, Class<? extends Exception>... causeExceptionClasses) {

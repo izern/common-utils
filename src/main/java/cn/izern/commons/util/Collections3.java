@@ -25,6 +25,7 @@ public class Collections3 {
 	 * @param collection 来源集合.
 	 * @param keyPropertyName 要提取为Map中的Key值的属性名.
 	 * @param valuePropertyName 要提取为Map中的Value值的属性名.
+	 * @return new Map
 	 */
 	@SuppressWarnings("unchecked")
 	public static Map extractToMap(final Collection collection, final String keyPropertyName,
@@ -48,6 +49,7 @@ public class Collections3 {
 	 * 
 	 * @param collection 来源集合.
 	 * @param propertyName 要提取的属性名.
+	 * @return new List
 	 */
 	@SuppressWarnings("unchecked")
 	public static List extractToList(final Collection collection, final String propertyName) {
@@ -70,6 +72,7 @@ public class Collections3 {
 	 * @param collection 来源集合.
 	 * @param propertyName 要提取的属性名.
 	 * @param separator 分隔符.
+	 * @return new String
 	 */
 	public static String extractToString(final Collection collection, final String propertyName, final String separator) {
 		List list = extractToList(collection, propertyName);
@@ -78,6 +81,9 @@ public class Collections3 {
 
 	/**
 	 * 转换Collection所有元素(通过toString())为String, 中间以 separator分隔。
+	 * @param collection   
+	 * @param separator  
+	 * @return
 	 */
 	public static String convertToString(final Collection collection, final String separator) {
 		return StringUtils.join(collection, separator);
@@ -85,6 +91,10 @@ public class Collections3 {
 
 	/**
 	 * 转换Collection所有元素(通过toString())为String, 每个元素的前面加入prefix，后面加入postfix，如<div>mymessage</div>。
+	 * @param collection
+	 * @param prefix
+	 * @param postfix
+	 * @return
 	 */
 	public static String convertToString(final Collection collection, final String prefix, final String postfix) {
 		StringBuilder builder = new StringBuilder();
@@ -96,13 +106,17 @@ public class Collections3 {
 
 	/**
 	 * 判断是否为空.
+	 * @param collection
+	 * @return
 	 */
 	public static boolean isEmpty(Collection collection) {
 		return (collection == null || collection.isEmpty());
 	}
 
 	/**
-	 * 取得Collection的第一个元素，如果collection为空返回null.
+	 *  取得Collection的第一个元素，如果collection为空返回null.
+	 * @param collection
+	 * @return
 	 */
 	public static <T> T getFirst(Collection<T> collection) {
 		if (isEmpty(collection)) {
@@ -114,6 +128,8 @@ public class Collections3 {
 
 	/**
 	 * 获取Collection的最后一个元素 ，如果collection为空返回null.
+	 * @param collection
+	 * @return
 	 */
 	public static <T> T getLast(Collection<T> collection) {
 		if (isEmpty(collection)) {
@@ -138,6 +154,9 @@ public class Collections3 {
 
 	/**
 	 * 返回a+b的新List.
+	 * @param a
+	 * @param b
+	 * @return
 	 */
 	public static <T> List<T> union(final Collection<T> a, final Collection<T> b) {
 		List<T> result = new ArrayList<T>(a);
@@ -147,6 +166,9 @@ public class Collections3 {
 
 	/**
 	 * 返回a-b的新List.
+	 * @param a
+	 * @param b
+	 * @return
 	 */
 	public static <T> List<T> subtract(final Collection<T> a, final Collection<T> b) {
 		List<T> list = new ArrayList<T>(a);
@@ -159,6 +181,9 @@ public class Collections3 {
 
 	/**
 	 * 返回a与b的交集的新List.
+	 * @param a
+	 * @param b
+	 * @return
 	 */
 	public static <T> List<T> intersection(Collection<T> a, Collection<T> b) {
 		List<T> list = new ArrayList<T>();

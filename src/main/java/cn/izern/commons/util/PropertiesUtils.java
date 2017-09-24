@@ -17,7 +17,10 @@ import org.springframework.core.io.ResourceLoader;
  * @author zern
  *
  * 2016年8月15日下午3:17:12
+ * 推荐使用Spring Boot @ConfigurationProperties
+ * <a href="https://docs.spring.io/spring-boot/docs/1.5.7.RELEASE/reference/htmlsingle/">@ConfigurationProperties</a>
  */
+@Deprecated
 public class PropertiesUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(PropertiesUtils.class);

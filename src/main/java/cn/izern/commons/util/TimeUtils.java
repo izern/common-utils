@@ -7,8 +7,8 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * 时间计算工具类
- * @author ThinkGem
- * @version 2013-11-03
+ * @author zern
+ * 2017年9月24日 下午12:52:14
  */
 public class TimeUtils {
 	
@@ -234,6 +234,13 @@ public class TimeUtils {
         this.timeSeparator = timeSeparator;
     }
 
+    /**
+     * 
+     * @param day
+     * @param hour
+     * @param minute
+     * @param second
+     */
     private void initialize(int day, int hour, int minute, int second) {
         set(DAY, day);
         set(HOUR, hour);
@@ -241,6 +248,10 @@ public class TimeUtils {
         set(SECOND, second);
     }
 
+    /**
+     * 
+     * @param time
+     */
     private void parseTime(String time) {
         if(time == null) {
             initialize(0, 0, 0, 0);
@@ -257,6 +268,12 @@ public class TimeUtils {
         parseTimeField(time, t, field--);
     }
 
+    /**
+     * 
+     * @param time
+     * @param t
+     * @param field
+     */
     private void parseTimeField(String time, String t, int field) {
         if(field < SECOND || t.length() < 1) {
             parseTimeException(time);
@@ -276,11 +293,18 @@ public class TimeUtils {
         set(field, n);
     }
 
+    /**
+     * 
+     * @param time
+     */
     private void parseTimeException(String time) {
         throw new IllegalArgumentException(time + ", time format error, HH"
                 + this.timeSeparator + "mm" + this.timeSeparator + "ss");
     }
 
+    /**
+     * 
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder(16);
         sb.append(fields[DAY]).append(',').append(' ');
@@ -290,6 +314,12 @@ public class TimeUtils {
         return sb.toString();
     }
 
+    /**
+     * 
+     * @param sb
+     * @param field
+     * @return
+     */
     private StringBuilder buildString(StringBuilder sb, int field) {
         if(fields[field] < 10) {
             sb.append('0');
@@ -297,6 +327,9 @@ public class TimeUtils {
         return sb.append(fields[field]);
     }
 
+    /**
+     * 
+     */
     public int hashCode() {
         final int PRIME = 31;
         int result = 1;
@@ -304,6 +337,9 @@ public class TimeUtils {
         return result;
     }
 
+    /**
+     * 
+     */
     public boolean equals(Object obj) {
         if (this == obj)
             return true;

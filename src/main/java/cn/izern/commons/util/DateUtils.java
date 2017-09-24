@@ -19,6 +19,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	/**
 	 * 得到当前日期字符串 格式（yyyy-MM-dd）
+	 * @return
 	 */
 	public static String getDate() {
 		return getDate("yyyy-MM-dd");
@@ -26,6 +27,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	
 	/**
 	 * 得到当前日期字符串 格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
+	 * @param pattern
+	 * @return
 	 */
 	public static String getDate(String pattern) {
 		return DateFormatUtils.format(new Date(), pattern);
@@ -33,6 +36,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	
 	/**
 	 * 得到日期字符串 默认格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
+	 * @param date
+	 * @param pattern
+	 * @return
 	 */
 	public static String formatDate(Date date, Object... pattern) {
 		String formatDate = null;
@@ -46,6 +52,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	
 	/**
 	 * 得到日期时间字符串，转换格式（yyyy-MM-dd HH:mm:ss）
+	 * @param date
+	 * @return
 	 */
 	public static String formatDateTime(Date date) {
 		return formatDate(date, "yyyy-MM-dd HH:mm:ss");
@@ -53,6 +61,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	/**
 	 * 得到当前时间字符串 格式（HH:mm:ss）
+	 * @return
 	 */
 	public static String getTime() {
 		return formatDate(new Date(), "HH:mm:ss");
@@ -60,6 +69,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	/**
 	 * 得到当前日期和时间字符串 格式（yyyy-MM-dd HH:mm:ss）
+	 * @return
 	 */
 	public static String getDateTime() {
 		return formatDate(new Date(), "yyyy-MM-dd HH:mm:ss");
@@ -67,13 +77,15 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	/**
 	 * 得到当前年份字符串 格式（yyyy）
+	 * @return
 	 */
 	public static String getYear() {
 		return formatDate(new Date(), "yyyy");
 	}
 
 	/**
-	 * 得到当前月份字符串 格式（MM）
+	 *  得到当前月份字符串 格式（MM）
+	 * @return
 	 */
 	public static String getMonth() {
 		return formatDate(new Date(), "MM");
@@ -81,6 +93,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	/**
 	 * 得到当天字符串 格式（dd）
+	 * @return
 	 */
 	public static String getDay() {
 		return formatDate(new Date(), "dd");
@@ -88,6 +101,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	/**
 	 * 得到当前星期字符串 格式（E）星期几
+	 * @return
 	 */
 	public static String getWeek() {
 		return formatDate(new Date(), "E");
@@ -98,6 +112,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 * { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", 
 	 *   "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm",
 	 *   "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm" }
+	 * @param str
+	 * @return
 	 */
 	public static Date parseDate(Object str) {
 		if (str == null){
@@ -167,14 +183,4 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		return (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
 	}
 	
-	/**
-	 * @param args
-	 * @throws ParseException
-	 */
-	public static void main(String[] args) throws ParseException {
-//		System.out.println(formatDate(parseDate("2010/3/6")));
-//		System.out.println(getDate("yyyy年MM月dd日 E"));
-//		long time = new Date().getTime()-parseDate("2012-11-19").getTime();
-//		System.out.println(time/(24*60*60*1000));
-	}
 }

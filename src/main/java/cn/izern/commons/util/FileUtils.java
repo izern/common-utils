@@ -23,11 +23,21 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	
 	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
 	
+	/**
+	 * 根据文件名获取类型
+	 * @param file
+	 * @return
+	 */
 	public static String getFileType(File file){
 		String name = file.getName();
 		return getFileType(name);
 	}
 	
+	/**
+	 * 根据文件名获取类型
+	 * @param fileName
+	 * @return
+	 */
 	public static String getFileType(String fileName){
 		if (fileName.indexOf(".") > 0) {
 			return fileName.substring(fileName.lastIndexOf(".")+1);

@@ -6,10 +6,8 @@ import java.text.DecimalFormat;
  * <p>
  * 文件大小工具类.
  * </p>
- *
- * @author poplar.yfyang
- * @version 1.0 2013-01-02 12:50 PM
- * @since JDK 1.5
+ * @author zern
+ * 2016年9月24日 下午12:30:35
  */
 public class FileSizeHelper {
 	public static long ONE_KB = 1024;
@@ -18,11 +16,21 @@ public class FileSizeHelper {
 	public static long ONE_TB = ONE_GB * (long)1024;
 	public static long ONE_PB = ONE_TB * (long)1024;
 
+	/**
+	 * 文件大小,转为可读单位
+	 * @param fileSize
+	 * @return
+	 */
 	public static String getHumanReadableFileSize(Long fileSize) {
 		if(fileSize == null) return null;
 		return getHumanReadableFileSize(fileSize.longValue());
 	}
 
+	/**
+	 * 文件大小,转为可读单位
+	 * @param fileSize
+	 * @return
+	 */
 	public static String getHumanReadableFileSize(long fileSize) {
 		if(fileSize < 0) {
 			return String.valueOf(fileSize);
@@ -51,6 +59,13 @@ public class FileSizeHelper {
 		return String.valueOf(fileSize)+"B";
 	}
 
+	/**
+	 * 文件大小,转为可读单位
+	 * @param fileSize
+	 * @param unit
+	 * @param unitName
+	 * @return
+	 */
 	private static String getHumanReadableFileSize(long fileSize, long unit, String unitName) {
 		if(fileSize == 0) return "0";
 
