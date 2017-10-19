@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 导入Excel文件（支持“XLS”和“XLSX”格式）
- * @author ThinkGem
- * @version 2013-03-10
+ * @author zern
+ * @version 2016-03-10
  */
 public class ExcelReader {
 	
