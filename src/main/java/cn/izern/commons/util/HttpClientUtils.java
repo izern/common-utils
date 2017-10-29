@@ -38,6 +38,8 @@ public class HttpClientUtils {
             .setConnectTimeout(30000)  
             .setConnectionRequestTimeout(30000)  
             .build();  
+    
+    private static String defaultAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3053.3 Safari/537.36";
       
     /** 
      * 发送 post请求 
@@ -221,6 +223,7 @@ public class HttpClientUtils {
             DefaultHostnameVerifier hostnameVerifier = new DefaultHostnameVerifier(publicSuffixMatcher);  
             httpClient = HttpClients.custom().setSSLHostnameVerifier(hostnameVerifier).build();  
             httpGet.setConfig(requestConfig);  
+            httpGet.setHeader("User-Agent", defaultAgent);
             // 执行请求  
             response = httpClient.execute(httpGet);  
             entity = response.getEntity();  

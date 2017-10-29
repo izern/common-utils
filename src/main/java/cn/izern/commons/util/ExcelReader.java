@@ -17,7 +17,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 导入Excel文件（支持“XLS”和“XLSX”格式）
@@ -104,19 +103,6 @@ public class ExcelReader {
 		this.fileName = file.getAbsolutePath();
 	}
 	
-	/**
-	 * 构造函数
-	 * @param file 导入文件对象
-	 * @param headerNum 标题行号，数据行号=标题行号+1
-	 * @param sheetIndex 工作表编号
-	 * @throws InvalidFormatException 
-	 * @throws IOException 
-	 */
-	public ExcelReader(MultipartFile multipartFile, int headerNum, int sheetIndex) 
-			throws InvalidFormatException, IOException {
-		this(multipartFile.getOriginalFilename(), multipartFile.getInputStream(), headerNum, sheetIndex);
-	}
-
 	/**
 	 * 构造函数
 	 * @param path 导入文件对象
